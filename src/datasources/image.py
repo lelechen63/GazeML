@@ -2,7 +2,7 @@
 import os
 import time
 
-import cv2 as cv
+import cv2 
 
 from .frames import FramesSource
 
