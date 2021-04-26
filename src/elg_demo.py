@@ -11,7 +11,7 @@ import cv2 as cv
 import numpy as np
 import tensorflow as tf
 
-from datasources import Video, Webcam
+from datasources import Video, Webcam, Image
 from models import ELG
 import util.gaze
 
@@ -21,6 +21,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Demonstration of landmarks localization.')
     parser.add_argument('-v', type=str, help='logging level', default='info',
                         choices=['debug', 'info', 'warning', 'error', 'critical'])
+
+    parser.add_argument('--from_image', type=str, help='Use this iamge path')
     parser.add_argument('--from_video', type=str, help='Use this video path instead of webcam')
     parser.add_argument('--record_video', type=str, help='Output path of video of demonstration.')
     parser.add_argument('--fullscreen', action='store_true')
@@ -56,7 +58,15 @@ if __name__ == '__main__':
 
         # Define webcam stream data source
         # Change data_format='NHWC' if not using CUDA
-        if args.from_video:
+        if args.from_image:
+            assert os.path.isfile(args.from_image)
+            data_source = Image(args.from_image,
+                                tensorflow_session=session, batch_size=batch_size,
+                                data_format='NCHW' if gpu_available else 'NHWC',
+                                eye_image_shape=(108, 180))
+
+
+        elif args.from_video:
             assert os.path.isfile(args.from_video)
             data_source = Video(args.from_video,
                                 tensorflow_session=session, batch_size=batch_size,
