@@ -11,8 +11,7 @@ from urllib.request import urlopen
 
 import cv2 as cv
 import numpy as np
-import tensorflow.compat.v1 as tf
-tf.disable_v2_behavior()
+import tensorflow as tf
 
 from core import BaseDataSource
 
