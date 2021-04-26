@@ -12,7 +12,8 @@ import numpy as np
 import tensorflow as tf
 
 
-from datasources import Video, Webcam, Image
+from datasources import Video, Webcam
+from datasources.image import Image
 from models import ELG
 import util.gaze
 
